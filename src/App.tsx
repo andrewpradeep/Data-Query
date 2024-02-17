@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { Layout } from "antd";
+import "./App.css";
+import QSearchBar from "./Components/QSearchBar";
+import DataView from "./Sections/DataView";
+
+const { Header, Content } = Layout;
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [isDataLoading, setDataLoading] = useState(false);
+    const [isDataFetchError, setDataFetchError] = useState(false);
+    const [dataSet, setDataSet] = useState([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const handleSearch = async () => {
+        try {
+            setDataLoading(true);
+            const queryData = await fetch("./customers.json").then((data) =>
+                data.json()
+            );
+            setDataSet(queryData);
+        } catch (err) {
+            setDataFetchError(true);
+        } finally {
+            setDataLoading(false);
+        }
+    };
+
+    const handleQuerySave = (value: string) => {
+        console.log(value);
+    };
+
+    return (
+        <>
+            <Layout className="layout--base">
+                <Header></Header>
+                <Layout>
+                    {/* <Sider></Sider> */}
+                    <Content className="p-6">
+                        <QSearchBar
+                            className="my-6"
+                            enterButton="search"
+                            onSearch={handleSearch}
+                            loading={isDataLoading}
+                            handleQuerySave={handleQuerySave}
+                        />
+
+                        {dataSet.length ? (
+                            <DataView dataSet={dataSet} />
+                        ) : (
+                            <>
+                                {isDataFetchError ? (
+                                    <div className="h-full">error</div>
+                                ) : (
+                                    <div className="h-full">No data yet</div>
+                                )}
+                            </>
+                        )}
+                    </Content>
+                </Layout>
+            </Layout>
+        </>
+    );
 }
 
-export default App
+export default App;
