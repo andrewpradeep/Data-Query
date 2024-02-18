@@ -10,8 +10,8 @@ const QContentBox: React.FC<QContentBoxProps> = ({
 }) => {
     return (
         <div className={`border rounded-lg bg-white ${className}`}>
-            <div className="py-2  rounded-t-lg">{header}</div>
-            <div className="p-3  border-t h-80 overflow-scroll">{children}</div>
+            <div className="rounded-t-lg">{header}</div>
+            <div className=" border-t h-80 overflow-scroll">{children}</div>
         </div>
     );
 };

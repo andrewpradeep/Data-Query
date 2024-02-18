@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import QTable from "../../Components/QTable";
 import { Button } from "antd";
 import { PieChartOutlined, TableOutlined } from "@ant-design/icons";
 import { DataViewProps, DataViewType } from "./interface";
 import GraphView from "../GraphView";
+import QTable from "../../Common/QTable";
 
 const DataView: React.FC<DataViewProps> = ({ dataSet, className = "" }) => {
     const [view, setView] = useState(DataViewType.Table);

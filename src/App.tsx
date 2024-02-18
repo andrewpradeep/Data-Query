@@ -1,12 +1,15 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Layout } from "antd";
 import "./App.css";
-import QSearchBar from "./Components/QSearchBar";
-import DataView from "./Views/DataView";
-import QRoundedLogo from "./Components/QRoundedLogo";
+
 import PersonalLogo from "./Assets/personalLogo.svg";
-import HistoryView from "./Views/HistoryView";
+
 import HistoryUtil from "./Utils/History";
+import { SearchHistory } from "./interface";
+import QRoundedLogo from "./Components/Common/QRoundedLogo";
+import HistoryView from "./Components/Views/HistoryView";
+import QSearchBar from "./Components/Common/QSearchBar";
+import DataView from "./Components/Views/DataView";
 
 const { Content } = Layout;
 
@@ -14,30 +17,36 @@ function App() {
     const [isDataLoading, setDataLoading] = useState(false);
     const [isDataFetchError, setDataFetchError] = useState(false);
     const [dataSet, setDataSet] = useState([]);
-    const [historyList, setHistoryList] = useState([
-        "Select * from SomeWhere",
-        "SELECT TABLE FROM SOEMTHING Changes",
-    ]);
+    const [historyList, setHistoryList] = useState<SearchHistory[]>([]);
     const [searchValue, setSearchValue] = useState("");
 
     const handleSearch = async (value: string) => {
         if (!value.length) {
             return;
         }
+        let rowsFetched = 0;
         try {
             setDataLoading(true);
             const queryData = await fetch("./customers.json").then((data) =>
                 data.json()
             );
+            rowsFetched = queryData.length;
             setDataSet(queryData);
         } catch (err) {
+            rowsFetched = 0;
             setDataFetchError(true);
         } finally {
             const tempList = [...historyList];
-            tempList.unshift(value);
+            const history = {
+                search: value,
+                rowCount: rowsFetched,
+                date: new Date(Date.now()),
+            };
+            tempList.unshift(history);
             while (tempList.length >= HistoryUtil.getLimit()) {
                 tempList.pop();
             }
+            HistoryUtil.addItem(history);
             setHistoryList(tempList);
             setDataLoading(false);
         }

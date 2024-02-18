@@ -1,7 +1,6 @@
 import { Select, Typography } from "antd";
 import { useState } from "react";
 import QPieChart from "../../Charts/QPieChart";
-import QChartContainer from "../../Components/QChartContainer";
 import QBarChart from "../../Charts/QBarChart";
 import {
     CHART_TYPE,
@@ -9,6 +8,7 @@ import {
     GraphViewProps,
     INSIGHT_TYPE,
 } from "./interface";
+import QChartContainer from "../../Common/QChartContainer";
 
 const GraphSwitch: React.FC<GraphSwitchProps> = ({ type, ...rest }) => {
     switch (type) {
