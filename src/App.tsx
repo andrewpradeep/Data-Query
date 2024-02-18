@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Layout } from "antd";
+import { Layout, Typography } from "antd";
 import "./App.css";
 
 import PersonalLogo from "./Assets/personalLogo.svg";
@@ -13,6 +13,7 @@ import DataView from "./Components/Views/DataView";
 import QuerySaveModal from "./Components/Modals/QuerySaveModal";
 import { useForm } from "antd/es/form/Form";
 import SavedQueryView from "./Components/Views/SavedQueryView";
+import { DatabaseOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -92,7 +93,7 @@ function App() {
             <Layout className="layout--base">
                 <Layout className="flex-row">
                     <aside className="flex flex-col w-1/4 border bg-secondary-shade h-full">
-                        <div className="flex justify-center align-center p-4">
+                        <div className="flex justify-center align-center border-b border-gray-300 p-4">
                             <QRoundedLogo
                                 logoUrl={PersonalLogo}
                                 alt="Andrew Pradeep Logo"
@@ -131,7 +132,17 @@ function App() {
                                 {isDataFetchError ? (
                                     <div className="h-full">error</div>
                                 ) : (
-                                    <div className="h-full">No data yet</div>
+                                    <div className="flex flex-col justify-center items-center h-full">
+                                        <DatabaseOutlined
+                                            style={{
+                                                fontSize: "20rem",
+                                                color: "#ebecf2",
+                                            }}
+                                        />
+                                        <Typography.Text className="mt-12 text-3xl text-slate-300">
+                                            No data
+                                        </Typography.Text>
+                                    </div>
                                 )}
                             </>
                         )}

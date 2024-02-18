@@ -1,19 +1,19 @@
-import { HistoryOutlined, SearchOutlined } from "@ant-design/icons";
+import { SaveOutlined } from "@ant-design/icons";
 
 import { Row, Tooltip, Typography } from "antd";
-import { SearchHistory } from "../../../interface";
+import { SavedQuery } from "../../../interface";
 import QContentBox from "../../Common/QContentBox";
 
 export interface HistoryViewProps {
     className?: string;
-    historyList: SearchHistory[];
-    onHistoryClick: (value: string) => void;
+    queryList: SavedQuery[];
+    onQueryClick: (value: string) => void;
 }
 
-const HistoryView: React.FC<HistoryViewProps> = ({
+const SavedQueryView: React.FC<HistoryViewProps> = ({
     className,
-    historyList,
-    onHistoryClick,
+    queryList,
+    onQueryClick,
 }) => {
     return (
         <QContentBox
@@ -21,35 +21,35 @@ const HistoryView: React.FC<HistoryViewProps> = ({
             header={
                 <div className="flex justify-center items-center">
                     <Typography.Title level={3} className="text-white">
-                        History
+                        Saved Queries
                     </Typography.Title>
                 </div>
             }
         >
-            {historyList.length ? (
-                historyList.map((history) => {
+            {queryList.length ? (
+                queryList.map((savedQuery) => {
                     return (
                         <Row
                             className="flex w-full bg  px-4 py-2 cursor-pointer flex-nowrap border-b hover:bg-secondary-shade"
                             onClick={() => {
-                                onHistoryClick(history.search);
+                                onQueryClick(savedQuery.query);
                             }}
                         >
-                            <HistoryOutlined style={{ fontSize: "1.5rem" }} />
+                            <SaveOutlined style={{ fontSize: "1.5rem" }} />
                             <div className="ml-4  overflow-hidden">
                                 <Tooltip
                                     mouseEnterDelay={2}
-                                    title={history.search}
+                                    title={savedQuery.title}
                                 >
                                     <Typography.Text
                                         strong
                                         className="block truncate"
                                     >
-                                        {history.search}
+                                        {savedQuery.title}
                                     </Typography.Text>
                                 </Tooltip>
                                 <Typography.Text className="block text-slate-600 ">
-                                    {history.date.toDateString()}
+                                    {savedQuery.category}
                                 </Typography.Text>
                             </div>
                         </Row>
@@ -57,7 +57,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                 })
             ) : (
                 <Row className="flex justify-center align center h-full">
-                    <SearchOutlined
+                    <SaveOutlined
                         style={{ fontSize: "10rem", color: "#ebecf2" }}
                     />
                 </Row>
@@ -66,4 +66,4 @@ const HistoryView: React.FC<HistoryViewProps> = ({
     );
 };
 
-export default HistoryView;
+export default SavedQueryView;
