@@ -5,11 +5,14 @@ import "./App.css";
 import PersonalLogo from "./Assets/personalLogo.svg";
 
 import HistoryUtil from "./Utils/History";
-import { SearchHistory } from "./interface";
+import { SavedQuery, SearchHistory } from "./interface";
 import QRoundedLogo from "./Components/Common/QRoundedLogo";
 import HistoryView from "./Components/Views/HistoryView";
 import QSearchBar from "./Components/Common/QSearchBar";
 import DataView from "./Components/Views/DataView";
+import QuerySaveModal from "./Components/Modals/QuerySaveModal";
+import { useForm } from "antd/es/form/Form";
+import SavedQueryView from "./Components/Views/SavedQueryView";
 
 const { Content } = Layout;
 
@@ -18,7 +21,11 @@ function App() {
     const [isDataFetchError, setDataFetchError] = useState(false);
     const [dataSet, setDataSet] = useState([]);
     const [historyList, setHistoryList] = useState<SearchHistory[]>([]);
+    const [savedQueryList, setSavedQueryList] = useState<SavedQuery[]>([]);
     const [searchValue, setSearchValue] = useState("");
+    const [showModal, setShowModal] = useState(false);
+
+    const [form] = useForm();
 
     const handleSearch = async (value: string) => {
         if (!value.length) {
@@ -55,12 +62,24 @@ function App() {
         setSearchValue(event.target.value);
     };
 
-    const handleQuerySave = (value: string) => {
-        console.log(value);
+    const openSaveQueryModal = () => {
+        setShowModal(true);
+    };
+
+    const handleQuerySave = (values: SavedQuery) => {
+        const tempList = [...savedQueryList];
+        tempList.push(values);
+        setSavedQueryList(tempList);
+        setShowModal(false);
+        form.resetFields();
     };
 
     const handleHistoryClick = (value: string) => {
         setSearchValue(value);
+    };
+
+    const handleQueryClick = (query: string) => {
+        setSearchValue(query);
     };
 
     useEffect(() => {
@@ -72,7 +91,7 @@ function App() {
         <>
             <Layout className="layout--base">
                 <Layout className="flex-row">
-                    <aside className="w-1/4 border bg-secondary-shade">
+                    <aside className="flex flex-col w-1/4 border bg-secondary-shade h-full">
                         <div className="flex justify-center align-center p-4">
                             <QRoundedLogo
                                 logoUrl={PersonalLogo}
@@ -80,11 +99,18 @@ function App() {
                                 className="w-12 h-12 mt-2 ml-6"
                             />
                         </div>
-                        <HistoryView
-                            className="mx-6 mt-4 bg-emerald-400"
-                            historyList={historyList}
-                            onHistoryClick={handleHistoryClick}
-                        />
+                        <div className="pb-6 overflow-scroll">
+                            <SavedQueryView
+                                className="mx-6 mt-4 bg-emerald-400"
+                                queryList={savedQueryList}
+                                onQueryClick={handleQueryClick}
+                            />
+                            <HistoryView
+                                className="mx-6 mt-4 bg-emerald-400"
+                                historyList={historyList}
+                                onHistoryClick={handleHistoryClick}
+                            />
+                        </div>
                     </aside>
                     <Content className="p-2  w-0">
                         <QSearchBar
@@ -95,7 +121,7 @@ function App() {
                             onSearch={handleSearch}
                             loading={isDataLoading}
                             allowClear
-                            handleQuerySave={handleQuerySave}
+                            handleQuerySave={openSaveQueryModal}
                         />
 
                         {dataSet.length ? (
@@ -110,9 +136,20 @@ function App() {
                             </>
                         )}
                     </Content>
-                    <aside className="w-1/5 border"></aside>
+                    <aside className="w-1/5 border bg-secondary-shade h-full"></aside>
                 </Layout>
             </Layout>
+            <QuerySaveModal
+                form={form}
+                query={searchValue}
+                show={showModal}
+                onCancel={() => {
+                    form.resetFields();
+                    setShowModal(false);
+                }}
+                onFailure={() => {}}
+                onSubmit={handleQuerySave}
+            />
         </>
     );
 }
