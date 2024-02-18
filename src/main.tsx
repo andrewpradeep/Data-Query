@@ -8,17 +8,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <ConfigProvider
             theme={{
+                hashed: false,
                 components: {
                     Button: {
                         colorPrimary: "#1DB954",
-
-                        algorithm: true, // Enable algorithm
+                        algorithm: true,
                     },
                     Input: {
                         colorPrimary: "#1DB954",
                         colorBorder: "#1DB954",
-
-                        algorithm: true, // Enable algorithm
+                        algorithm: true,
                     },
                 },
             }}

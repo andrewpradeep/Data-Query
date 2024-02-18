@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React from "react";
 import { Button, Input, Tooltip } from "antd";
 import { SearchProps } from "antd/es/input";
 import "./index.css";
@@ -14,18 +14,9 @@ const QSearchBar: React.FC<SearchBarProps> = ({
     placeholder = "Search your data query",
     className,
     handleQuerySave,
-    onChange = () => {},
+    value = "",
     ...rest
 }) => {
-    const [inputValue, setInputValue] = useState("");
-
-    const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (
-        event
-    ) => {
-        setInputValue(event.target.value);
-        onChange(event);
-    };
-
     return (
         <>
             <div className={`flex ${className}`}>
@@ -36,16 +27,16 @@ const QSearchBar: React.FC<SearchBarProps> = ({
                         size="large"
                         className={"mr-2"}
                         onClick={() => {
-                            handleQuerySave(inputValue);
+                            handleQuerySave(value as string);
                         }}
-                        disabled={!inputValue.length}
+                        disabled={!(value as string).length}
                     ></Button>
                 </Tooltip>
                 <Search
                     size="large"
                     placeholder={placeholder}
+                    value={value}
                     {...rest}
-                    onChange={handleSearchChange}
                 />
             </div>
         </>

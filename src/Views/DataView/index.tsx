@@ -9,7 +9,7 @@ import GraphView from "../GraphView";
 const DataView: React.FC<DataViewProps> = ({ dataSet }) => {
     const [view, setView] = useState(DataViewType.Table);
     return (
-        <div className="flex flex-col border rounded">
+        <div className="flex flex-col border rounded p-2">
             <div className="flex p-2">
                 <Button
                     className="mx-2"
@@ -33,9 +33,9 @@ const DataView: React.FC<DataViewProps> = ({ dataSet }) => {
                 </Button>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 p-3">
                 {view === DataViewType.Table && (
-                    <QTable dataSource={dataSet} bordered />
+                    <QTable dataSource={dataSet} bordered className="mx-3" />
                 )}
                 {view === DataViewType.Insight && (
                     <GraphView dataList={dataSet} />

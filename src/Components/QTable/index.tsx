@@ -46,7 +46,7 @@ const QTable: React.FC<TableProps> = ({ dataSource = [], ...rest }) => {
         };
     });
     return (
-        <>
+        <div className="w-62">
             <Table
                 virtual
                 pagination={false}
@@ -56,7 +56,7 @@ const QTable: React.FC<TableProps> = ({ dataSource = [], ...rest }) => {
                 columns={columns}
                 {...rest}
             />
-        </>
+        </div>
     );
 };
 
