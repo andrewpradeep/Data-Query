@@ -5,4 +5,5 @@ export enum DataViewType {
 
 export interface DataViewProps {
     dataSet: Record<string, string>[];
+    className?: string;
 }

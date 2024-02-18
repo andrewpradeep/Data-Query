@@ -1,10 +1,6 @@
 import { HistoryOutlined } from "@ant-design/icons";
 import QContentBox from "../../Components/QContentBox";
 import { Row, Tooltip, Typography } from "antd";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config";
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 export interface HistoryViewProps {
     className?: string;
@@ -21,15 +17,11 @@ const HistoryView: React.FC<HistoryViewProps> = ({
         <QContentBox
             className={className}
             header={
-                <>
-                    <HistoryOutlined
-                        style={{ color: "#ffffff" }}
-                        className="mr-2"
-                    />
-                    <Typography.Text className="text-white">
+                <div className="flex justify-center items-center">
+                    <Typography.Title level={3} className="text-white">
                         History
-                    </Typography.Text>
-                </>
+                    </Typography.Title>
+                </div>
             }
         >
             {historyList.map((history) => {
@@ -40,11 +32,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                             onHistoryClick(history);
                         }}
                     >
-                        <HistoryOutlined
-                            style={{
-                                color: fullConfig.theme.colors["primary-green"],
-                            }}
-                        />
+                        <HistoryOutlined />
                         <Tooltip>
                             <Typography.Text className="ml-2 hover:text-primary-green   truncate">
                                 {history}

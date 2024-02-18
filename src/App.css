@@ -1,10 +1,13 @@
 
 
 #root {
-    display: flex;
-    width: 100vw;
+    display: flex;  
     text-align: center;
     min-height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    vertical-align: top;
+  
 }
 
 .layout--base {

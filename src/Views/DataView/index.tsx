@@ -6,10 +6,10 @@ import { PieChartOutlined, TableOutlined } from "@ant-design/icons";
 import { DataViewProps, DataViewType } from "./interface";
 import GraphView from "../GraphView";
 
-const DataView: React.FC<DataViewProps> = ({ dataSet }) => {
+const DataView: React.FC<DataViewProps> = ({ dataSet, className = "" }) => {
     const [view, setView] = useState(DataViewType.Table);
     return (
-        <div className="flex flex-col border rounded p-2">
+        <div className={`flex flex-col border rounded p-2 ${className}`}>
             <div className="flex p-2">
                 <Button
                     className="mx-2"

@@ -21,6 +21,9 @@ function App() {
     const [searchValue, setSearchValue] = useState("");
 
     const handleSearch = async (value: string) => {
+        if (!value.length) {
+            return;
+        }
         try {
             setDataLoading(true);
             const queryData = await fetch("./customers.json").then((data) =>
@@ -60,7 +63,7 @@ function App() {
         <>
             <Layout className="layout--base">
                 <Layout className="flex-row">
-                    <aside className="w-1/4 border bg-zinc-200">
+                    <aside className="w-1/4 border bg-secondary-shade">
                         <div className="flex justify-center align-center p-4">
                             <QRoundedLogo
                                 logoUrl={PersonalLogo}
@@ -69,12 +72,12 @@ function App() {
                             />
                         </div>
                         <HistoryView
-                            className="mx-6 mt-4"
+                            className="mx-6 mt-4 bg-emerald-400"
                             historyList={historyList}
                             onHistoryClick={handleHistoryClick}
                         />
                     </aside>
-                    <Content className="p-2 mt-12 w-0">
+                    <Content className="p-2  w-0">
                         <QSearchBar
                             value={searchValue}
                             className="my-6"
@@ -82,11 +85,12 @@ function App() {
                             onChange={handleChange}
                             onSearch={handleSearch}
                             loading={isDataLoading}
+                            allowClear
                             handleQuerySave={handleQuerySave}
                         />
 
                         {dataSet.length ? (
-                            <DataView dataSet={dataSet} />
+                            <DataView dataSet={dataSet} className={"mx-2"} />
                         ) : (
                             <>
                                 {isDataFetchError ? (
