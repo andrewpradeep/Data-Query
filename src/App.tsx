@@ -1,5 +1,5 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { Button, Layout, Tooltip, Typography, message } from "antd";
+import { ChangeEventHandler, Suspense, lazy, useEffect, useState } from "react";
+import { Button, Layout, Spin, Tooltip, Typography, message } from "antd";
 import "./App.css";
 
 import PersonalLogo from "./Assets/personalLogo.svg";
@@ -9,13 +9,19 @@ import { SavedQuery, SearchHistory } from "./interface";
 import QRoundedLogo from "./Components/Common/QRoundedLogo";
 import HistoryView from "./Components/Views/HistoryView";
 import QSearchBar from "./Components/Common/QSearchBar";
-import DataView from "./Components/Views/DataView";
+// import DataView from "./Components/Views/DataView";
 import QuerySaveModal from "./Components/Modals/QuerySaveModal";
 import { useForm } from "antd/es/form/Form";
 import SavedQueryView from "./Components/Views/SavedQueryView";
-import { CopyOutlined, DatabaseOutlined } from "@ant-design/icons";
+import {
+    CopyOutlined,
+    DatabaseOutlined,
+    LoadingOutlined,
+    WarningOutlined,
+} from "@ant-design/icons";
 
 const { Content } = Layout;
+const DataView = lazy(() => import("./Components/Views/DataView"));
 
 function App() {
     const [isDataLoading, setDataLoading] = useState(false);
@@ -29,7 +35,7 @@ function App() {
     const [form] = useForm();
 
     const handleSearch = async (value: string) => {
-        if (!value.length) {
+        if (!value.length && !isDataLoading) {
             return;
         }
         let rowsFetched = 0;
@@ -156,11 +162,46 @@ function App() {
                         />
 
                         {dataSet.length ? (
-                            <DataView dataSet={dataSet} className={" h-full"} />
+                            <Suspense
+                                fallback={
+                                    <div className=" flex justify-center items-center h-full">
+                                        <Spin
+                                            indicator={
+                                                <LoadingOutlined
+                                                    style={{ fontSize: "7rem" }}
+                                                />
+                                            }
+                                        />
+                                    </div>
+                                }
+                            >
+                                <DataView
+                                    dataSet={dataSet}
+                                    className={" h-full"}
+                                />
+                            </Suspense>
                         ) : (
                             <>
                                 {isDataFetchError ? (
-                                    <div className="h-full">error</div>
+                                    <div className="flex flex-col justify-center items-center h-full">
+                                        <WarningOutlined
+                                            className="text-red-700"
+                                            style={{ fontSize: "10rem" }}
+                                        />
+                                        <Typography.Text className=" text-red-700 mt-12 text-3xl text-slate-300 font-semibold">
+                                            Error Loading Data
+                                        </Typography.Text>
+                                    </div>
+                                ) : isDataLoading ? (
+                                    <div className=" flex justify-center items-center h-full">
+                                        <Spin
+                                            indicator={
+                                                <LoadingOutlined
+                                                    style={{ fontSize: "7rem" }}
+                                                />
+                                            }
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="flex flex-col p-4 items-center h-full">
                                         <DatabaseOutlined
