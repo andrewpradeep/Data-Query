@@ -1,6 +1,6 @@
 # SQL Query Runner
 
-This project is a sample prototype of a SQL query runner
+This project is a sample prototype of a SQL query runner you can view the website in this link https://dataqueryrunner.netlify.app/
 
 1. You can view the walkthrough of the project in the [video](https://www.loom.com/share/46e442f71c7249ec85a93d594cb72290?sid=b6cdce6a-e5f8-45af-a644-8b578924be13)
 
@@ -35,3 +35,11 @@ https://www.loom.com/share/46e442f71c7249ec85a93d594cb72290?sid=b6cdce6a-e5f8-45
 -   Added Meta descriptions for better SEO reach.
 
 -   Modified Colors, Added alt attributes and aria label to support better accessibility.
+
+5. Features Which can be added in the future
+
+-   Data Validation ( the provided in the sample itself contains empty rows and mismatch data we can use a dedicated webworker to process the entire data without affecting the main thread).
+
+-   Comparative analysis - Compare two or three columns to view the insight between them
+
+-   Import Graphs as pdf
