@@ -4,7 +4,7 @@ This project is a sample prototype of a SQL query runner you can view the websit
 
 # 1. Walkthrough video
 
-You can view the walkthrough of the project in the [video](https://www.loom.com/share/46e442f71c7249ec85a93d594cb72290?sid=b6cdce6a-e5f8-45af-a644-8b578924be13)
+You can view the walkthrough of the project in the video
 
 https://www.loom.com/share/46e442f71c7249ec85a93d594cb72290?sid=b6cdce6a-e5f8-45af-a644-8b578924be13
 
