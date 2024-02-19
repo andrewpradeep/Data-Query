@@ -60,7 +60,7 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
                     <SaveOutlined
                         style={{ fontSize: "6rem", color: "#ebecf2" }}
                     />
-                    <Typography.Text className="mt-2 block font-semibold text-slate-300">
+                    <Typography.Text className="mt-2 text-neutral-500 block font-semibold">
                         Saved Queries
                     </Typography.Text>
                 </Row>

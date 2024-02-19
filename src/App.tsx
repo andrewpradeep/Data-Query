@@ -211,7 +211,7 @@ function App() {
                                             }}
                                             className="mt-12"
                                         />
-                                        <Typography.Text className="mt-12 text-3xl text-slate-300 font-semibold">
+                                        <Typography.Text className="mt-12 text-3xl text-neutral-500 font-semibold">
                                             No data
                                         </Typography.Text>
                                     </div>
