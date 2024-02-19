@@ -33,6 +33,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                         <Button
                             icon={<DeleteOutlined />}
                             size="small"
+                            aria-label="Clear History"
                             disabled={!historyList.length}
                             onClick={onClearHistory}
                         ></Button>
@@ -44,6 +45,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                 historyList.map((history) => {
                     return (
                         <Row
+                            key={history.search + history.date}
                             className="flex w-full bg  px-4 py-2 cursor-pointer flex-nowrap border-b hover:bg-secondary-shade"
                             onClick={() => {
                                 onHistoryClick(history.search);

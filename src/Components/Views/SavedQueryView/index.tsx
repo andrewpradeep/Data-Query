@@ -30,6 +30,7 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
                 queryList.map((savedQuery) => {
                     return (
                         <Row
+                            key={savedQuery.title + savedQuery.query}
                             className="flex w-full bg  px-4 py-2 cursor-pointer flex-nowrap border-b hover:bg-secondary-shade"
                             onClick={() => {
                                 onQueryClick(savedQuery.query);

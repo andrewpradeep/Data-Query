@@ -95,6 +95,16 @@ function App() {
         setHistoryList([]);
     };
 
+    const handleExportData = () => {
+        const dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(JSON.stringify(dataSet, undefined, 2));
+        const dlAnchorElem = document.getElementById("downloadAnchorElem");
+        dlAnchorElem?.setAttribute("href", dataStr);
+        dlAnchorElem?.setAttribute("download", "queryData.json");
+        dlAnchorElem?.click();
+    };
+
     useEffect(() => {
         const list = HistoryUtil.getAll();
         setHistoryList(list);
@@ -132,15 +142,16 @@ function App() {
                             className="mb-4"
                             onChange={handleChange}
                             onSearch={handleSearch}
-                            loading={isDataLoading}
+                            isDataLoading={isDataLoading}
                             allowClear
                             onQuerySave={openSaveQueryModal}
                             actions={[
-                                <Tooltip title={"Copy"}>
+                                <Tooltip title={"Copy"} key="copy button">
                                     <Button
                                         type="primary"
                                         size="large"
                                         icon={<CopyOutlined />}
+                                        aria-label="Copy"
                                         onClick={async () => {
                                             try {
                                                 await navigator.clipboard.writeText(
@@ -178,6 +189,7 @@ function App() {
                                 <DataView
                                     dataSet={dataSet}
                                     className={" h-full"}
+                                    onExportData={handleExportData}
                                 />
                             </Suspense>
                         ) : (
@@ -222,6 +234,7 @@ function App() {
                     {/* <aside className="w-1/5 border bg-secondary-shade h-full"></aside> */}
                 </Layout>
             </Layout>
+            <a id="downloadAnchorElem" style={{ display: "none" }}></a>
 
             {showModal && (
                 <QuerySaveModal

@@ -9,7 +9,7 @@ const { TextArea } = Input;
 export interface SearchBarProps extends TextAreaProps {
     onQuerySave: (value: string) => void;
     onSearch: (value: string) => void;
-    loading: boolean;
+    isDataLoading: boolean;
     actions?: React.ReactNode[];
 }
 
@@ -20,6 +20,7 @@ const QSearchBar: React.FC<SearchBarProps> = ({
     onSearch,
     value = "",
     actions,
+    isDataLoading,
     ...rest
 }) => {
     return (
@@ -36,6 +37,8 @@ const QSearchBar: React.FC<SearchBarProps> = ({
                             onClick={() => {
                                 onSearch(value as string);
                             }}
+                            aria-label="Search"
+                            loading={isDataLoading}
                             disabled={!(value as string).length}
                         ></Button>
                     </Tooltip>
@@ -45,6 +48,7 @@ const QSearchBar: React.FC<SearchBarProps> = ({
                             type="primary"
                             icon={<SaveOutlined />}
                             size="large"
+                            aria-label="Save"
                             onClick={() => {
                                 onQuerySave(value as string);
                             }}

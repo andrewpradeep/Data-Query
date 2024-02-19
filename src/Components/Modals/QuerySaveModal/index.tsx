@@ -55,7 +55,10 @@ const QuerySaveModal: React.FC<QuerySaveModalProps> = ({
                     <Input placeholder="Title" />
                 </Form.Item>
                 <Form.Item name="query" rules={[{ required: true }]}>
-                    <Input placeholder="Query" />
+                    <Input.TextArea
+                        placeholder="Query"
+                        autoSize={{ minRows: 3, maxRows: 3 }}
+                    />
                 </Form.Item>
                 <Form.Item name="category" rules={[{ required: true }]}>
                     <Select
