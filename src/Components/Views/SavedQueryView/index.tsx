@@ -19,8 +19,8 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
         <QContentBox
             className={className}
             header={
-                <div className="flex justify-center items-center">
-                    <Typography.Title level={3} className="text-white">
+                <div className="flex justify-between px-4 items-center">
+                    <Typography.Title level={3} className="mt-2 truncate">
                         Saved Queries
                     </Typography.Title>
                 </div>
@@ -43,7 +43,7 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
                                 >
                                     <Typography.Text
                                         strong
-                                        className="block truncate"
+                                        className=" text-lg block truncate"
                                     >
                                         {savedQuery.title}
                                     </Typography.Text>
@@ -58,7 +58,7 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
             ) : (
                 <Row className="flex justify-center align center h-full">
                     <SaveOutlined
-                        style={{ fontSize: "10rem", color: "#ebecf2" }}
+                        style={{ fontSize: "6rem", color: "#ebecf2" }}
                     />
                 </Row>
             )}

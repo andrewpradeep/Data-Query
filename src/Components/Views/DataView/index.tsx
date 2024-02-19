@@ -33,12 +33,15 @@ const DataView: React.FC<DataViewProps> = ({ dataSet, className = "" }) => {
                 </Button>
             </div>
 
-            <div className="mt-4 p-3">
+            <div className="mt-2 p-4 grow">
                 {view === DataViewType.Table && (
                     <QTable dataSource={dataSet} bordered className="mx-3" />
                 )}
                 {view === DataViewType.Insight && (
-                    <GraphView dataList={dataSet} />
+                    <GraphView
+                        dataList={dataSet}
+                        className="mx-3 mb-3 h-full"
+                    />
                 )}
             </div>
         </div>

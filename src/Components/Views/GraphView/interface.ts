@@ -17,6 +17,7 @@ export interface GenericChartProps {
 
 export interface GraphViewProps {
     dataList: Record<string, string>[];
+    className?: string;
 }
 
 export interface GraphSwitchProps extends GenericChartProps {

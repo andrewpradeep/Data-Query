@@ -1,7 +1,7 @@
 import { Form, Input, Modal, Select } from "antd";
 import { FormInstance } from "antd/es/form/Form";
 import { QUERY_CATEGORIES } from "../../../interface";
-import React from "react";
+import React, { useEffect } from "react";
 
 export interface QuerySaveModalProps {
     show: boolean;
@@ -29,6 +29,10 @@ const QuerySaveModal: React.FC<QuerySaveModalProps> = ({
         };
     });
 
+    useEffect(() => {
+        form.resetFields();
+    }, [show]);
+
     const handleSubmit = () => {
         form.submit();
     };
@@ -51,7 +55,7 @@ const QuerySaveModal: React.FC<QuerySaveModalProps> = ({
                     <Input placeholder="Title" />
                 </Form.Item>
                 <Form.Item name="query" rules={[{ required: true }]}>
-                    <Input placeholder="Query" value={query} />
+                    <Input placeholder="Query" />
                 </Form.Item>
                 <Form.Item name="category" rules={[{ required: true }]}>
                     <Select

@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Layout, Typography } from "antd";
+import { Button, Layout, Tooltip, Typography, message } from "antd";
 import "./App.css";
 
 import PersonalLogo from "./Assets/personalLogo.svg";
@@ -13,7 +13,7 @@ import DataView from "./Components/Views/DataView";
 import QuerySaveModal from "./Components/Modals/QuerySaveModal";
 import { useForm } from "antd/es/form/Form";
 import SavedQueryView from "./Components/Views/SavedQueryView";
-import { DatabaseOutlined } from "@ant-design/icons";
+import { CopyOutlined, DatabaseOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -59,12 +59,13 @@ function App() {
             setDataLoading(false);
         }
     };
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         setSearchValue(event.target.value);
     };
 
     const openSaveQueryModal = () => {
         setShowModal(true);
+        form.resetFields();
     };
 
     const handleQuerySave = (values: SavedQuery) => {
@@ -81,6 +82,11 @@ function App() {
 
     const handleQueryClick = (query: string) => {
         setSearchValue(query);
+    };
+
+    const handleClearHistory = () => {
+        HistoryUtil.clear();
+        setHistoryList([]);
     };
 
     useEffect(() => {
@@ -110,29 +116,53 @@ function App() {
                                 className="mx-6 mt-4 bg-emerald-400"
                                 historyList={historyList}
                                 onHistoryClick={handleHistoryClick}
+                                onClearHistory={handleClearHistory}
                             />
                         </div>
                     </aside>
-                    <Content className="p-2  w-0">
+                    <Content className="flex flex-col py-3 px-4  w-0">
                         <QSearchBar
                             value={searchValue}
-                            className="my-6"
-                            enterButton="search"
+                            className="mb-4"
                             onChange={handleChange}
                             onSearch={handleSearch}
                             loading={isDataLoading}
                             allowClear
-                            handleQuerySave={openSaveQueryModal}
+                            onQuerySave={openSaveQueryModal}
+                            actions={[
+                                <Tooltip title={"Copy"}>
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        icon={<CopyOutlined />}
+                                        onClick={async () => {
+                                            try {
+                                                await navigator.clipboard.writeText(
+                                                    searchValue
+                                                );
+                                                message.info(
+                                                    "copied to clipboard"
+                                                );
+                                            } catch (err) {
+                                                console.error(
+                                                    "Failed to copy: ",
+                                                    err
+                                                );
+                                            }
+                                        }}
+                                    />
+                                </Tooltip>,
+                            ]}
                         />
 
                         {dataSet.length ? (
-                            <DataView dataSet={dataSet} className={"mx-2"} />
+                            <DataView dataSet={dataSet} className={" h-full"} />
                         ) : (
                             <>
                                 {isDataFetchError ? (
                                     <div className="h-full">error</div>
                                 ) : (
-                                    <div className="flex flex-col justify-center items-center h-full">
+                                    <div className="flex flex-col p-4 items-center h-full">
                                         <DatabaseOutlined
                                             style={{
                                                 fontSize: "20rem",
@@ -147,20 +177,23 @@ function App() {
                             </>
                         )}
                     </Content>
-                    <aside className="w-1/5 border bg-secondary-shade h-full"></aside>
+                    {/* <aside className="w-1/5 border bg-secondary-shade h-full"></aside> */}
                 </Layout>
             </Layout>
-            <QuerySaveModal
-                form={form}
-                query={searchValue}
-                show={showModal}
-                onCancel={() => {
-                    form.resetFields();
-                    setShowModal(false);
-                }}
-                onFailure={() => {}}
-                onSubmit={handleQuerySave}
-            />
+
+            {showModal && (
+                <QuerySaveModal
+                    form={form}
+                    query={searchValue}
+                    show={showModal}
+                    onCancel={() => {
+                        form.resetFields();
+                        setShowModal(false);
+                    }}
+                    onFailure={() => {}}
+                    onSubmit={handleQuerySave}
+                />
+            )}
         </>
     );
 }

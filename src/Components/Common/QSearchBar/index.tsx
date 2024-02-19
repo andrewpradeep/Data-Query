@@ -1,39 +1,62 @@
 import React from "react";
 import { Button, Input, Tooltip } from "antd";
-import { SearchProps } from "antd/es/input";
+import { TextAreaProps } from "antd/es/input";
 import "./index.css";
-import { SaveOutlined } from "@ant-design/icons";
+import { SaveOutlined, SearchOutlined } from "@ant-design/icons";
 
-const { Search } = Input;
+const { TextArea } = Input;
 
-export interface SearchBarProps extends SearchProps {
-    handleQuerySave: (value: string) => void;
+export interface SearchBarProps extends TextAreaProps {
+    onQuerySave: (value: string) => void;
+    onSearch: (value: string) => void;
+    loading: boolean;
+    actions?: React.ReactNode[];
 }
 
 const QSearchBar: React.FC<SearchBarProps> = ({
     placeholder = "Search your data query",
     className,
-    handleQuerySave,
+    onQuerySave,
+    onSearch,
     value = "",
+    actions,
     ...rest
 }) => {
     return (
         <>
-            <div className={`flex ${className}`}>
-                <Tooltip title={"Save"}>
-                    <Button
-                        type="primary"
-                        icon={<SaveOutlined />}
-                        size="large"
-                        className={"mr-2"}
-                        onClick={() => {
-                            handleQuerySave(value as string);
-                        }}
-                        disabled={!(value as string).length}
-                    ></Button>
-                </Tooltip>
-                <Search
-                    size="large"
+            <div
+                className={`flex flex-col border px-2 py-4 rounded bg-secondary-shade ${className}`}
+            >
+                <div className="flex flex-wrap mb-2 gap-3">
+                    <Tooltip title={"Search"}>
+                        <Button
+                            type="primary"
+                            icon={<SearchOutlined />}
+                            size="large"
+                            onClick={() => {
+                                onSearch(value as string);
+                            }}
+                            disabled={!(value as string).length}
+                        ></Button>
+                    </Tooltip>
+
+                    <Tooltip title={"Save"}>
+                        <Button
+                            type="primary"
+                            icon={<SaveOutlined />}
+                            size="large"
+                            onClick={() => {
+                                onQuerySave(value as string);
+                            }}
+                            disabled={!(value as string).length}
+                        ></Button>
+                    </Tooltip>
+
+                    {actions}
+                </div>
+
+                <TextArea
+                    autoSize={{ minRows: 4, maxRows: 4 }}
                     placeholder={placeholder}
                     value={value}
                     {...rest}

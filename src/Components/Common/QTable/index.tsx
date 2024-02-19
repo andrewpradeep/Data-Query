@@ -50,7 +50,7 @@ const QTable: React.FC<TableProps> = ({ dataSource = [], ...rest }) => {
             <Table
                 virtual
                 pagination={false}
-                scroll={{ x: 2000, y: 500 }}
+                scroll={{ x: 2000, y: 400 }}
                 dataSource={dataSource}
                 rowKey={"customerID"}
                 columns={columns}

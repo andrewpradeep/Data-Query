@@ -1,6 +1,10 @@
-import { HistoryOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+    DeleteOutlined,
+    HistoryOutlined,
+    SearchOutlined,
+} from "@ant-design/icons";
 
-import { Row, Tooltip, Typography } from "antd";
+import { Button, Row, Tooltip, Typography } from "antd";
 import { SearchHistory } from "../../../interface";
 import QContentBox from "../../Common/QContentBox";
 
@@ -8,21 +12,29 @@ export interface HistoryViewProps {
     className?: string;
     historyList: SearchHistory[];
     onHistoryClick: (value: string) => void;
+    onClearHistory: () => void;
 }
 
 const HistoryView: React.FC<HistoryViewProps> = ({
     className,
     historyList,
     onHistoryClick,
+    onClearHistory,
 }) => {
     return (
         <QContentBox
             className={className}
             header={
-                <div className="flex justify-center items-center">
-                    <Typography.Title level={3} className="text-white">
+                <div className="flex justify-between px-4 items-center">
+                    <Typography.Title level={3} className="truncate mt-2">
                         History
                     </Typography.Title>
+                    <Button
+                        icon={<DeleteOutlined />}
+                        size="small"
+                        disabled={!historyList.length}
+                        onClick={onClearHistory}
+                    ></Button>
                 </div>
             }
         >
@@ -43,14 +55,19 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                                 >
                                     <Typography.Text
                                         strong
-                                        className="block truncate"
+                                        className="block text-lg truncate"
                                     >
                                         {history.search}
                                     </Typography.Text>
                                 </Tooltip>
-                                <Typography.Text className="block text-slate-600 ">
-                                    {history.date.toDateString()}
-                                </Typography.Text>
+                                <Tooltip
+                                    title={history.date.toDateString()}
+                                    mouseEnterDelay={2}
+                                >
+                                    <Typography.Text className="block text-slate-600 truncate ">
+                                        {history.date.toDateString()}
+                                    </Typography.Text>
+                                </Tooltip>
                             </div>
                         </Row>
                     );
@@ -58,7 +75,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
             ) : (
                 <Row className="flex justify-center align center h-full">
                     <SearchOutlined
-                        style={{ fontSize: "10rem", color: "#ebecf2" }}
+                        style={{ fontSize: "6rem", color: "#ebecf2" }}
                     />
                 </Row>
             )}

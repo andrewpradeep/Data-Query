@@ -21,7 +21,7 @@ const GraphSwitch: React.FC<GraphSwitchProps> = ({ type, ...rest }) => {
     }
 };
 
-const GraphView: React.FC<GraphViewProps> = ({ dataList }) => {
+const GraphView: React.FC<GraphViewProps> = ({ dataList, className = "" }) => {
     const [selectedInsight, setSelectedInsight] = useState(INSIGHT_TYPE.MONO);
     const [entityList, setEntityList] = useState<string[]>([]);
     const [selectedChart, setSelectedChart] = useState<CHART_TYPE>(
@@ -39,6 +39,7 @@ const GraphView: React.FC<GraphViewProps> = ({ dataList }) => {
         {
             value: INSIGHT_TYPE.COMPARE,
             label: "Comparitive Insight",
+            disabled: true,
         },
     ];
 
@@ -58,13 +59,23 @@ const GraphView: React.FC<GraphViewProps> = ({ dataList }) => {
     });
     return (
         <>
-            <section className="m-3 border rounded ">
+            <section className={`border rounded ${className} `}>
                 <div className="flex gap-x-2 p-3  border-b">
                     <Select
                         value={selectedInsight}
                         onChange={handleInsightChange}
                         options={insightTypeList}
                     ></Select>
+
+                    <Select
+                        className="min-w-32"
+                        options={chartList}
+                        value={selectedChart}
+                        onChange={(value) => {
+                            setSelectedChart(value);
+                        }}
+                    ></Select>
+
                     <Select
                         className="min-w-32"
                         value={entityList[0]}
@@ -76,14 +87,7 @@ const GraphView: React.FC<GraphViewProps> = ({ dataList }) => {
                         }}
                         placeholder="select entity"
                     ></Select>
-                    <Select
-                        className="min-w-32"
-                        options={chartList}
-                        value={selectedChart}
-                        onChange={(value) => {
-                            setSelectedChart(value);
-                        }}
-                    ></Select>
+
                     {selectedInsight === INSIGHT_TYPE.COMPARE && (
                         <Select
                             className="min-w-32"
@@ -98,34 +102,33 @@ const GraphView: React.FC<GraphViewProps> = ({ dataList }) => {
                         ></Select>
                     )}
                 </div>
-                <div>
-                    {canGenerateInsight ? (
-                        selectedInsight === INSIGHT_TYPE.MONO ? (
-                            <>
-                                <QChartContainer
-                                    title={`${selectedChart} chart`}
-                                    className="mt-2 flex flex-col justify-center items-center"
-                                >
-                                    <GraphSwitch
-                                        type={selectedChart}
-                                        width={400}
-                                        dataList={dataList.map((obj) => {
-                                            return obj[entityList[0]];
-                                        })}
-                                    />
-                                </QChartContainer>
-                            </>
-                        ) : (
-                            <div></div>
-                        )
+
+                {canGenerateInsight ? (
+                    selectedInsight === INSIGHT_TYPE.MONO ? (
+                        <>
+                            <QChartContainer
+                                title={`${selectedChart} chart`}
+                                className="mt-2 flex flex-col justify-center items-center"
+                            >
+                                <GraphSwitch
+                                    type={selectedChart}
+                                    width={400}
+                                    dataList={dataList.map((obj) => {
+                                        return obj[entityList[0]];
+                                    })}
+                                />
+                            </QChartContainer>
+                        </>
                     ) : (
-                        <div className="mt-4 h-80 flex justify-center items-center">
-                            <Typography.Text className="block">
-                                Generate Insights
-                            </Typography.Text>
-                        </div>
-                    )}
-                </div>
+                        <div></div>
+                    )
+                ) : (
+                    <div className="mt-4 h-80 flex justify-center items-center">
+                        <Typography.Text className="block">
+                            Generate Insights
+                        </Typography.Text>
+                    </div>
+                )}
             </section>
         </>
     );

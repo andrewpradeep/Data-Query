@@ -25,12 +25,17 @@ const HistoryUtil = (function () {
             };
         });
     };
+
+    const clear = () => {
+        localStorage.setItem("searchHistory", JSON.stringify([]));
+    };
     return {
         addItem,
         getAll,
         getLimit: () => {
             return History_Limit;
         },
+        clear,
     };
 })();
 
