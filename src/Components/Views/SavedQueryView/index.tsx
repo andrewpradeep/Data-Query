@@ -56,10 +56,13 @@ const SavedQueryView: React.FC<HistoryViewProps> = ({
                     );
                 })
             ) : (
-                <Row className="flex justify-center align center h-full">
+                <Row className="flex flex-col justify-center items-center h-full">
                     <SaveOutlined
                         style={{ fontSize: "6rem", color: "#ebecf2" }}
                     />
+                    <Typography.Text className="mt-2 block font-semibold text-slate-300">
+                        Saved Queries
+                    </Typography.Text>
                 </Row>
             )}
         </QContentBox>

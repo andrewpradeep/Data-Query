@@ -29,12 +29,14 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                     <Typography.Title level={3} className="truncate mt-2">
                         History
                     </Typography.Title>
-                    <Button
-                        icon={<DeleteOutlined />}
-                        size="small"
-                        disabled={!historyList.length}
-                        onClick={onClearHistory}
-                    ></Button>
+                    <Tooltip title={"clear history"}>
+                        <Button
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            disabled={!historyList.length}
+                            onClick={onClearHistory}
+                        ></Button>
+                    </Tooltip>
                 </div>
             }
         >
@@ -48,6 +50,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                             }}
                         >
                             <HistoryOutlined style={{ fontSize: "1.5rem" }} />
+
                             <div className="ml-4  overflow-hidden">
                                 <Tooltip
                                     mouseEnterDelay={2}
@@ -73,10 +76,13 @@ const HistoryView: React.FC<HistoryViewProps> = ({
                     );
                 })
             ) : (
-                <Row className="flex justify-center align center h-full">
+                <Row className="flex flex-col justify-center items-center h-full">
                     <SearchOutlined
                         style={{ fontSize: "6rem", color: "#ebecf2" }}
                     />
+                    <Typography.Text className=" mt-2 block font-semibold text-slate-300">
+                        Search History
+                    </Typography.Text>
                 </Row>
             )}
         </QContentBox>

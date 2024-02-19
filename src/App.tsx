@@ -168,8 +168,9 @@ function App() {
                                                 fontSize: "20rem",
                                                 color: "#ebecf2",
                                             }}
+                                            className="mt-12"
                                         />
-                                        <Typography.Text className="mt-12 text-3xl text-slate-300">
+                                        <Typography.Text className="mt-12 text-3xl text-slate-300 font-semibold">
                                             No data
                                         </Typography.Text>
                                     </div>

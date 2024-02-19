@@ -25,7 +25,7 @@ const QSearchBar: React.FC<SearchBarProps> = ({
     return (
         <>
             <div
-                className={`flex flex-col border px-2 py-4 rounded bg-secondary-shade ${className}`}
+                className={`flex flex-col border p-4 pb-6 rounded bg-secondary-shade ${className}`}
             >
                 <div className="flex flex-wrap mb-2 gap-3">
                     <Tooltip title={"Search"}>
