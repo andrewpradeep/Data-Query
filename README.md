@@ -42,8 +42,8 @@ https://www.loom.com/share/46e442f71c7249ec85a93d594cb72290?sid=b6cdce6a-e5f8-45
 
 -   Filter Saved query , copy from saved queries and history
 
--   Data Validation ( the provided in the sample itself contains empty rows and mismatch data we can use a dedicated webworker to process the entire data without affecting the main thread).
+-   Data Validation (Data provided in the sample itself contains empty rows and mismatch data we can use a dedicated webworker to process the entire data without affecting the main thread).
 
--   Comparative analysis - Compare two or three columns to view the insight between them
+-   Comparative analysis(Compare two or three columns to view the insight between them)
 
 -   Import Graphs as pdf
