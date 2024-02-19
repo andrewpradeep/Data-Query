@@ -55,6 +55,7 @@ const GraphView: React.FC<GraphViewProps> = ({ dataList, className = "" }) => {
         return {
             value: chart,
             label: `${chart} chart`,
+            disabled: chart === CHART_TYPE.LINE,
         };
     });
     return (
